@@ -226,22 +226,22 @@ Bez nowej migracji SQL. Istniejący rodzic z F-01 zostaje; dziecko pojawia się 
 
 #### Automated
 
-- [x] 2.1 `npx eslint src/lib/today.ts src/pages/api/family/chores.ts` przechodzi
-- [x] 2.2 `npx astro check` przechodzi
+- [x] 2.1 `npx eslint src/lib/today.ts src/pages/api/family/chores.ts` przechodzi — 9920029
+- [x] 2.2 `npx astro check` przechodzi — 9920029
 
 #### Manual
 
-- [x] 2.3 Dwa obowiązki tego samego dziecka z tym samym tytułem zapisują się z datą dnia w Polsce; pusty tytuł nie tworzy wiersza
-- [x] 2.4 Sesja dziecka nie tworzy obowiązku
+- [x] 2.3 Dwa obowiązki tego samego dziecka z tym samym tytułem zapisują się z datą dnia w Polsce; pusty tytuł nie tworzy wiersza — 9920029
+- [x] 2.4 Sesja dziecka nie tworzy obowiązku — 9920029
 
 ### Phase 3: Ekran rodzica
 
 #### Automated
 
-- [ ] 3.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx src/pages/api/auth/signin.ts` przechodzi
-- [ ] 3.2 `npx astro check` przechodzi
+- [x] 3.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx src/pages/api/auth/signin.ts` przechodzi
+- [x] 3.2 `npx astro check` przechodzi
 
 #### Manual
 
-- [ ] 3.3 W wąskim oknie przeglądarki rodzic loguje się, zakłada dziecko, widzi `{login}@family.local`, dodaje dwa obowiązki i wylogowuje się
-- [ ] 3.4 Kolejne logowanie dodaje trzeci obowiązek bez nowego konta; na ekranie nie da się założyć drugiego dziecka
+- [x] 3.3 W wąskim oknie przeglądarki rodzic loguje się, zakłada dziecko, widzi `{login}@family.local`, dodaje dwa obowiązki i wylogowuje się
+- [x] 3.4 Kolejne logowanie dodaje trzeci obowiązek bez nowego konta; na ekranie nie da się założyć drugiego dziecka
