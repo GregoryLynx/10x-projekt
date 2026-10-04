@@ -3,7 +3,7 @@ project: Obowiązki
 version: 1
 status: draft
 created: 2026-09-29
-updated: 2026-10-01
+updated: 2026-10-04
 prd_version: 2
 main_goal: speed
 top_blocker: time
@@ -43,7 +43,7 @@ Co wieczór i rano rodzic wielokrotnie powtarza dzieciom listę obowiązków; ka
 
 | ID   | Change ID                      | Outcome (user can …)                                              | Prerequisites | PRD refs              | Status   |
 | ---- | ------------------------------ | ----------------------------------------------------------------- | ------------- | --------------------- | -------- |
-| F-01 | family-data-and-roles          | (foundation) model rodziny, ról i wierszy obowiązków na dziś      | —             | Access Control, NFR   | in-progress |
+| F-01 | family-data-and-roles          | (foundation) model rodziny, ról i wierszy obowiązków na dziś      | —             | Access Control, NFR   | done |
 | S-01 | parent-add-child-and-chore     | rodzic doda dziecko i obowiązek na dziś dla tego dziecka          | F-01          | US-01, FR-001–002,005–006 | proposed |
 | S-02 | child-view-and-checkoff        | dziecko zobaczy listę na dziś i odhaczy pozycję                   | S-01          | US-01, FR-003–004,008–010 | proposed |
 | S-03 | parent-confirm-chores          | rodzic zobaczy listę dziecka i potwierdzi odhaczenie              | S-02          | US-01, FR-007,011     | proposed |
@@ -76,7 +76,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:**
   - Czy konto dziecka zakłada rodzic (zaproszenie/hasło), czy osobna rejestracja — Owner: user. Block: no.
 - **Risk:** Bez tego enablera każdy kawałek UI byłby nieplanowalny; trzymamy zakres minimalny — tylko to, co odblokowuje pierwszą pętlę, bez katalogu obowiązków ani kalendarza. Główne ryzyka milestone: czas do deadline oraz nieznajomość stosu (Astro/Supabase/Cloudflare zamiast codziennego C#/Vue) — dlatego F-01 jest wąski i plannable od razu.
-- **Status:** in-progress
+- **Status:** done
 
 ## Slices
 
@@ -167,3 +167,5 @@ Foundations below assume these are present and do NOT re-scaffold them.
 ## Milestone History
 
 ## Done
+
+- **F-01: (foundation) istnieje minimalny kontrakt danych i dostępu: rodzina, rola rodzic/dziecko, wiersze obowiązków na dziś ze stanami (do zrobienia, odhaczone przez dziecko, potwierdzone przez rodzica); dziecko nie widzi list rodzeństwa.** — Archived 2026-10-04 → `context/archive/2026-10-01-family-data-and-roles/`. Lesson: —.

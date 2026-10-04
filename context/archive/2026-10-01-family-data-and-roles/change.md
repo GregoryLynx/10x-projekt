@@ -1,10 +1,10 @@
 ---
 change_id: family-data-and-roles
 title: Family data and roles
-status: implementing
+status: archived
 created: 2026-10-01
-updated: 2026-10-01
-archived_at: null
+updated: 2026-10-04
+archived_at: 2026-10-04T08:59:19Z
 ---
 
 ## Notes
