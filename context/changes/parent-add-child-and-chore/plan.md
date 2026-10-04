@@ -238,10 +238,10 @@ Bez nowej migracji SQL. Istniejący rodzic z F-01 zostaje; dziecko pojawia się 
 
 #### Automated
 
-- [x] 3.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx src/pages/api/auth/signin.ts` przechodzi
-- [x] 3.2 `npx astro check` przechodzi
+- [x] 3.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx src/pages/api/auth/signin.ts` przechodzi — cc574ea
+- [x] 3.2 `npx astro check` przechodzi — cc574ea
 
 #### Manual
 
-- [x] 3.3 W wąskim oknie przeglądarki rodzic loguje się, zakłada dziecko, widzi `{login}@family.local`, dodaje dwa obowiązki i wylogowuje się
-- [x] 3.4 Kolejne logowanie dodaje trzeci obowiązek bez nowego konta; na ekranie nie da się założyć drugiego dziecka
+- [x] 3.3 W wąskim oknie przeglądarki rodzic loguje się, zakłada dziecko, widzi `{login}@family.local`, dodaje dwa obowiązki i wylogowuje się — cc574ea
+- [x] 3.4 Kolejne logowanie dodaje trzeci obowiązek bez nowego konta; na ekranie nie da się założyć drugiego dziecka — cc574ea
