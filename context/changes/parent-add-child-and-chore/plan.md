@@ -214,25 +214,25 @@ Bez nowej migracji SQL. Istniejący rodzic z F-01 zostaje; dziecko pojawia się 
 
 #### Automated
 
-- [x] 1.1 `npx eslint src/lib/supabase-admin.ts src/pages/api/family/children.ts` przechodzi
-- [x] 1.2 `npx astro check` przechodzi
+- [x] 1.1 `npx eslint src/lib/supabase-admin.ts src/pages/api/family/children.ts` przechodzi — 570435d
+- [x] 1.2 `npx astro check` przechodzi — 570435d
 
 #### Manual
 
-- [x] 1.3 Sesja rodzica tworzy jedno dziecko i rodzic zostaje zalogowany; w `profiles` jest jeden wiersz `child` w tej rodzinie, a `auth.users` ma `role=child`
-- [x] 1.4 Drugie wywołanie jest odrzucone i nie pojawia się kolejny profil ani druga rodzina
+- [x] 1.3 Sesja rodzica tworzy jedno dziecko i rodzic zostaje zalogowany; w `profiles` jest jeden wiersz `child` w tej rodzinie, a `auth.users` ma `role=child` — 570435d
+- [x] 1.4 Drugie wywołanie jest odrzucone i nie pojawia się kolejny profil ani druga rodzina — 570435d
 
 ### Phase 2: Obowiązek na dziś
 
 #### Automated
 
-- [ ] 2.1 `npx eslint src/lib/today.ts src/pages/api/family/chores.ts` przechodzi
-- [ ] 2.2 `npx astro check` przechodzi
+- [x] 2.1 `npx eslint src/lib/today.ts src/pages/api/family/chores.ts` przechodzi
+- [x] 2.2 `npx astro check` przechodzi
 
 #### Manual
 
-- [ ] 2.3 Dwa obowiązki tego samego dziecka z tym samym tytułem zapisują się z datą dnia w Polsce; pusty tytuł nie tworzy wiersza
-- [ ] 2.4 Sesja dziecka nie tworzy obowiązku
+- [x] 2.3 Dwa obowiązki tego samego dziecka z tym samym tytułem zapisują się z datą dnia w Polsce; pusty tytuł nie tworzy wiersza
+- [x] 2.4 Sesja dziecka nie tworzy obowiązku
 
 ### Phase 3: Ekran rodzica
 
