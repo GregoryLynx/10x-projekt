@@ -44,7 +44,7 @@ Co wieczór i rano rodzic wielokrotnie powtarza dzieciom listę obowiązków; ka
 | ID   | Change ID                      | Outcome (user can …)                                              | Prerequisites | PRD refs              | Status   |
 | ---- | ------------------------------ | ----------------------------------------------------------------- | ------------- | --------------------- | -------- |
 | F-01 | family-data-and-roles          | (foundation) model rodziny, ról i wierszy obowiązków na dziś      | —             | Access Control, NFR   | done |
-| S-01 | parent-add-child-and-chore     | rodzic doda dziecko i obowiązek na dziś dla tego dziecka          | F-01          | US-01, FR-001–002,005–006 | proposed |
+| S-01 | parent-add-child-and-chore     | rodzic doda dziecko i obowiązek na dziś dla tego dziecka          | F-01          | US-01, FR-001–002,005–006 | done |
 | S-02 | child-view-and-checkoff        | dziecko zobaczy listę na dziś i odhaczy pozycję                   | S-01          | US-01, FR-003–004,008–010 | proposed |
 | S-03 | parent-confirm-chores          | rodzic zobaczy listę dziecka i potwierdzi odhaczenie              | S-02          | US-01, FR-007,011     | proposed |
 | S-04 | parent-remove-unconfirmed-chore | rodzic usunie niepotwierdzony obowiązek z listy dziecka na dziś | S-01          | US-02, FR-012         | proposed |
@@ -90,7 +90,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Pierwszy kawałek łączy stos (Astro + Supabase) z domeną — celowo wąski (jedno dziecko), żeby szybko zweryfikować model danych z F-01.
-- **Status:** proposed
+- **Status:** done
 
 ### S-02: Dziecko widzi listę i odhacza
 
@@ -169,3 +169,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 ## Done
 
 - **F-01: (foundation) istnieje minimalny kontrakt danych i dostępu: rodzina, rola rodzic/dziecko, wiersze obowiązków na dziś ze stanami (do zrobienia, odhaczone przez dziecko, potwierdzone przez rodzica); dziecko nie widzi list rodzeństwa.** — Archived 2026-10-04 → `context/archive/2026-10-01-family-data-and-roles/`. Lesson: —.
+- **S-01: user can (as parent) sign in, add one child account to the family, add a today-chore for that child, and sign out.** — Archived 2026-10-04 → `context/archive/2026-10-04-parent-add-child-and-chore/`. Lesson: —.
