@@ -160,10 +160,10 @@ Bez nowej migracji SQL. Odhaczenia zrobione ręcznie w bazie, z pustym `parent_c
 
 #### Automated
 
-- [x] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ChildToday.tsx` przechodzi
-- [x] 2.2 `npx astro check` przechodzi
+- [x] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ChildToday.tsx` przechodzi — a59c19f
+- [x] 2.2 `npx astro check` przechodzi — a59c19f
 
 #### Manual
 
-- [x] 2.3 W wąskim oknie dziecko loguje się, widzi dwa „Umyj zęby” starszy wyżej, odhacza górny, widzi go w Checked off, cofa i wylogowuje się
-- [x] 2.4 Rodzic po logowaniu nadal widzi formularz dodawania obowiązku, bez listy dziecka
+- [x] 2.3 W wąskim oknie dziecko loguje się, widzi dwa „Umyj zęby” starszy wyżej, odhacza górny, widzi go w Checked off, cofa i wylogowuje się — a59c19f
+- [x] 2.4 Rodzic po logowaniu nadal widzi formularz dodawania obowiązku, bez listy dziecka — a59c19f
