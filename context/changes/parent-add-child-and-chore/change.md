@@ -1,10 +1,10 @@
 ---
 change_id: parent-add-child-and-chore
 title: Parent add child and chore
-status: archived
+status: impl_reviewed
 created: 2026-10-04
-updated: 2026-10-04
-archived_at: 2026-10-04T14:09:25Z
+updated: 2026-10-13
+archived_at: null
 ---
 
 ## Notes
