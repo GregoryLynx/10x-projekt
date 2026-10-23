@@ -3,7 +3,7 @@ project: Obowiązki
 version: 1
 status: draft
 created: 2026-09-29
-updated: 2026-10-16
+updated: 2026-10-23
 prd_version: 2
 main_goal: speed
 top_blocker: time
@@ -45,7 +45,7 @@ Co wieczór i rano rodzic wielokrotnie powtarza dzieciom listę obowiązków; ka
 | ---- | ------------------------------ | ----------------------------------------------------------------- | ------------- | --------------------- | -------- |
 | F-01 | family-data-and-roles          | (foundation) model rodziny, ról i wierszy obowiązków na dziś      | —             | Access Control, NFR   | done |
 | S-01 | parent-add-child-and-chore     | rodzic doda dziecko i obowiązek na dziś dla tego dziecka          | F-01          | US-01, FR-001–002,005–006 | done |
-| S-02 | child-view-and-checkoff        | dziecko zobaczy listę na dziś i odhaczy pozycję                   | S-01          | US-01, FR-003–004,008–010 | in-progress |
+| S-02 | child-view-and-checkoff        | dziecko zobaczy listę na dziś i odhaczy pozycję                   | S-01          | US-01, FR-003–004,008–010 | done |
 | S-03 | parent-confirm-chores          | rodzic zobaczy listę dziecka i potwierdzi odhaczenie              | S-02          | US-01, FR-007,011     | proposed |
 | S-04 | parent-remove-unconfirmed-chore | rodzic usunie niepotwierdzony obowiązek z listy dziecka na dziś | S-01          | US-02, FR-012         | proposed |
 | S-05 | second-child-isolation         | rodzic doda drugie dziecko; każde widzi tylko swoje obowiązki     | S-03, S-04    | US-01, US-02, FR-005  | proposed |
@@ -102,7 +102,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** NFR „telefon w przeglądarce” powinien być sprawdzony na tym ekranie — lista czytelna na wąskim viewportcie.
-- **Status:** in-progress
+- **Status:** done
 
 ### S-03: Rodzic potwierdza odhaczenia
 
@@ -170,3 +170,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 - **F-01: (foundation) istnieje minimalny kontrakt danych i dostępu: rodzina, rola rodzic/dziecko, wiersze obowiązków na dziś ze stanami (do zrobienia, odhaczone przez dziecko, potwierdzone przez rodzica); dziecko nie widzi list rodzeństwa.** — Archived 2026-10-04 → `context/archive/2026-10-01-family-data-and-roles/`. Lesson: —.
 - **S-01: user can (as parent) sign in, add one child account to the family, add a today-chore for that child, and sign out.** — Archived 2026-10-04 → `context/archive/2026-10-04-parent-add-child-and-chore/`. Lesson: —.
+- **S-02: user can (as child) sign in, see what they still have to do today and what they already checked off, check off a chore, and sign out.** — Archived 2026-10-23 → `context/archive/2026-10-16-child-view-and-checkoff/`. Lesson: —.
