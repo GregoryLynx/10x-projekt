@@ -90,7 +90,14 @@ export const POST: APIRoute = async (context) => {
   });
 
   if (inserted.error) {
-    await admin.auth.admin.deleteUser(childId);
+    try {
+      const removed = await admin.auth.admin.deleteUser(childId);
+      if (removed.error) {
+        return context.redirect(dashboardError("Could not release this login"));
+      }
+    } catch {
+      return context.redirect(dashboardError("Could not release this login"));
+    }
     return context.redirect(dashboardError("Could not save the child profile"));
   }
 
