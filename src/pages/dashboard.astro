@@ -1,16 +1,53 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import ChildToday from "@/components/family/ChildToday";
+import type { ChildChore } from "@/components/family/ChildToday";
 import ParentToday from "@/components/family/ParentToday";
 import type { ParentChild, ParentTodayView } from "@/components/family/ParentToday";
 import { getCurrentProfile } from "@/lib/profile";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { createClient } from "@/lib/supabase";
+import { warsawToday } from "@/lib/today";
 
 const serverError = Astro.url.searchParams.get("error");
 const choreAdded = Astro.url.searchParams.get("added") === "1";
+const choreChecked = Astro.url.searchParams.get("checked") === "1";
+const choreUndone = Astro.url.searchParams.get("undone") === "1";
 
 let view: ParentTodayView = "unavailable";
 let child: ParentChild | null = null;
+let showChild = false;
+let childChores: ChildChore[] = [];
+let childChoresLoadFailed = false;
+
+function isTimestampOrNull(value: unknown): value is string | null {
+  return value === null || typeof value === "string";
+}
+
+function parseChildChore(raw: unknown): ChildChore | null {
+  if (typeof raw !== "object" || raw === null) {
+    return null;
+  }
+  if (!("id" in raw) || !("title" in raw) || !("child_checked_at" in raw) || !("parent_confirmed_at" in raw)) {
+    return null;
+  }
+  if (typeof raw.id !== "string" || typeof raw.title !== "string") {
+    return null;
+  }
+  if (!isTimestampOrNull(raw.child_checked_at)) {
+    return null;
+  }
+  if (!isTimestampOrNull(raw.parent_confirmed_at)) {
+    return null;
+  }
+
+  return {
+    id: raw.id,
+    title: raw.title,
+    childCheckedAt: raw.child_checked_at,
+    parentConfirmedAt: raw.parent_confirmed_at,
+  };
+}
 
 const supabase = createClient(Astro.request.headers, Astro.cookies);
 if (supabase) {
@@ -60,6 +97,33 @@ if (supabase) {
         };
       }
     }
+  } else if (profile?.role === "child") {
+    showChild = true;
+    const choresResult = await supabase
+      .from("today_chores")
+      .select("id, title, child_checked_at, parent_confirmed_at, created_at")
+      .eq("child_profile_id", profile.id)
+      .eq("chore_date", warsawToday())
+      .order("created_at", { ascending: true })
+      .order("id", { ascending: true });
+
+    if (choresResult.error || !Array.isArray(choresResult.data)) {
+      childChoresLoadFailed = true;
+    } else {
+      const parsed: ChildChore[] = [];
+      for (const item of choresResult.data) {
+        const raw: unknown = item;
+        const row = parseChildChore(raw);
+        if (!row) {
+          childChoresLoadFailed = true;
+          break;
+        }
+        parsed.push(row);
+      }
+      if (!childChoresLoadFailed) {
+        childChores = parsed;
+      }
+    }
   }
 }
 ---
@@ -70,7 +134,18 @@ if (supabase) {
       <h1 class="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-center text-2xl font-bold text-transparent">
         Dashboard
       </h1>
-      <ParentToday serverError={serverError} view={view} child={child} choreAdded={choreAdded} client:load />
+      {showChild ? (
+        <ChildToday
+          serverError={serverError}
+          loadFailed={childChoresLoadFailed}
+          chores={childChores}
+          choreChecked={choreChecked}
+          choreUndone={choreUndone}
+          client:load
+        />
+      ) : (
+        <ParentToday serverError={serverError} view={view} child={child} choreAdded={choreAdded} client:load />
+      )}
       <form method="POST" action="/api/auth/signout" class="mt-6 text-center">
         <button
           type="submit"
