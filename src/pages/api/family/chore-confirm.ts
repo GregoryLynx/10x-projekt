@@ -69,10 +69,11 @@ export const POST: APIRoute = async (context) => {
     .update({ parent_confirmed_at: now, updated_at: now })
     .eq("id", chore_id)
     .eq("chore_date", warsawToday())
+    .is("parent_confirmed_at", null)
     .select("id")
     .maybeSingle();
 
-  if (updated.error || !updated.data) {
+  if (updated.error) {
     return context.redirect(dashboardError("Could not save the confirmation"));
   }
 
