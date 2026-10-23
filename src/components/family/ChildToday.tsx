@@ -63,7 +63,7 @@ export default function ChildToday({ serverError, loadFailed, chores, choreCheck
 
   let body: ReactNode;
   if (loadFailed) {
-    body = <p className={cn("text-center text-sm text-blue-100/80")}>Could not load today's list.</p>;
+    body = <p className={cn("text-center text-sm text-blue-100/80")}>{"Could not load today's list."}</p>;
   } else if (chores.length === 0) {
     body = <p className={cn("text-center text-sm text-blue-100/80")}>Nothing to do today.</p>;
   } else {
