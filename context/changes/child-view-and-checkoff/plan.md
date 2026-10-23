@@ -148,13 +148,13 @@ Bez nowej migracji SQL. Odhaczenia zrobione ręcznie w bazie, z pustym `parent_c
 
 #### Automated
 
-- [x] 1.1 `npx eslint src/pages/api/family/chore-check.ts` przechodzi
-- [x] 1.2 `npx astro check` przechodzi
+- [x] 1.1 `npx eslint src/pages/api/family/chore-check.ts` przechodzi — 961a925
+- [x] 1.2 `npx astro check` przechodzi — 961a925
 
 #### Manual
 
-- [x] 1.3 Sesja dziecka odhacza własny obowiązek z dziś i cofa go; `child_checked_at` wraca do null
-- [x] 1.4 Sesja rodzica oraz obowiązek spoza dziś albo cudzy nie zmieniają wiersza
+- [x] 1.3 Sesja dziecka odhacza własny obowiązek z dziś i cofa go; `child_checked_at` wraca do null — 961a925
+- [x] 1.4 Sesja rodzica oraz obowiązek spoza dziś albo cudzy nie zmieniają wiersza — 961a925
 
 ### Phase 2: Ekran dziecka
 
