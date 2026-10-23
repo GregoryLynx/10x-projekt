@@ -169,10 +169,10 @@ Migracji nie ma. Istniejące wiersze z pustym `parent_confirmed_at` zostają nie
 
 #### Automated
 
-- [x] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx` przechodzi
-- [x] 2.2 `npx astro check` przechodzi
+- [x] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx` przechodzi — 9a69262
+- [x] 2.2 `npx astro check` przechodzi — 9a69262
 
 #### Manual
 
-- [x] 2.3 Rodzic widzi trzy grupy w kolejności starszy wyżej; Confirm przenosi czekający wiersz do Done i pokazuje „Chore confirmed.”
-- [x] 2.4 Po potwierdzeniu dziecko nie cofa odhaczenia, a rodzic nadal ma formularz dodawania i napis o drugim dziecku
+- [x] 2.3 Rodzic widzi trzy grupy w kolejności starszy wyżej; Confirm przenosi czekający wiersz do Done i pokazuje „Chore confirmed.” — 9a69262
+- [x] 2.4 Po potwierdzeniu dziecko nie cofa odhaczenia, a rodzic nadal ma formularz dodawania i napis o drugim dziecku — 9a69262
