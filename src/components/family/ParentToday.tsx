@@ -1,10 +1,13 @@
+import type { ReactNode } from "react";
 import React, { useState } from "react";
-import { AtSign, ClipboardList, Lock, Plus, User, UserPlus } from "lucide-react";
+import { AtSign, Check, ClipboardList, Lock, Plus, User, UserPlus } from "lucide-react";
 import { FormField } from "@/components/auth/FormField";
 import { PasswordToggle } from "@/components/auth/PasswordToggle";
 import { ServerError } from "@/components/auth/ServerError";
 import { SubmitButton } from "@/components/auth/SubmitButton";
+import type { ChildChore } from "@/components/family/ChildToday";
 import { cn } from "@/lib/utils";
+import { isDone } from "@/types";
 
 const LOGIN_PATTERN = /^[a-z0-9]{3,32}$/;
 const MIN_PASSWORD_LENGTH = 6;
@@ -22,12 +25,22 @@ interface Props {
   view: ParentTodayView;
   child: ParentChild | null;
   choreAdded: boolean;
+  loadFailed: boolean;
+  chores: ChildChore[];
+  choreConfirmed: boolean;
 }
 
 interface AddChildErrors {
   displayName?: string;
   login?: string;
   password?: string;
+}
+
+function choreIsDone(chore: ChildChore): boolean {
+  return isDone({
+    child_checked_at: chore.childCheckedAt,
+    parent_confirmed_at: chore.parentConfirmedAt,
+  });
 }
 
 function AddChildForm({ serverError }: { serverError?: string | null }) {
@@ -126,14 +139,55 @@ function AddChildForm({ serverError }: { serverError?: string | null }) {
   );
 }
 
+function ConfirmForm({ chore }: { chore: ChildChore }) {
+  return (
+    <form method="POST" action="/api/family/chore-confirm">
+      <input type="hidden" name="chore_id" value={chore.id} />
+      <SubmitButton pendingText="Confirming..." icon={<Check className={cn("size-4")} />}>
+        Confirm
+      </SubmitButton>
+    </form>
+  );
+}
+
+function ChoreGroup({
+  heading,
+  chores,
+  showConfirm,
+}: {
+  heading: string;
+  chores: ChildChore[];
+  showConfirm?: boolean;
+}) {
+  return (
+    <section className={cn("space-y-3")}>
+      <h2 className={cn("text-center text-sm font-semibold text-blue-100")}>{heading}</h2>
+      <ul className={cn("space-y-4")}>
+        {chores.map((chore) => (
+          <li key={chore.id} className={cn("space-y-2")}>
+            <p className={cn("text-center text-sm text-white")}>{chore.title}</p>
+            {showConfirm ? <ConfirmForm chore={chore} /> : null}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function ChildToday({
   child,
   serverError,
   choreAdded,
+  loadFailed,
+  chores,
+  choreConfirmed,
 }: {
   child: ParentChild;
   serverError?: string | null;
   choreAdded: boolean;
+  loadFailed: boolean;
+  chores: ChildChore[];
+  choreConfirmed: boolean;
 }) {
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState<string | undefined>();
@@ -147,6 +201,25 @@ function ChildToday({
     setTitleError(undefined);
   }
 
+  const todo = chores.filter((chore) => chore.childCheckedAt === null);
+  const waiting = chores.filter((chore) => chore.childCheckedAt !== null && !choreIsDone(chore));
+  const done = chores.filter((chore) => choreIsDone(chore));
+
+  let listBody: ReactNode;
+  if (loadFailed) {
+    listBody = <p className={cn("text-center text-sm text-blue-100/80")}>{"Could not load today's list."}</p>;
+  } else if (chores.length === 0) {
+    listBody = <p className={cn("text-center text-sm text-blue-100/80")}>{"Nothing on today's list."}</p>;
+  } else {
+    listBody = (
+      <div className={cn("space-y-4")}>
+        {todo.length > 0 ? <ChoreGroup heading="To do" chores={todo} /> : null}
+        {waiting.length > 0 ? <ChoreGroup heading="Waiting for confirmation" chores={waiting} showConfirm /> : null}
+        {done.length > 0 ? <ChoreGroup heading="Done" chores={done} /> : null}
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
       <div className="space-y-1 text-center">
@@ -157,6 +230,8 @@ function ChildToday({
       </div>
       <p className="text-center text-sm text-blue-100/50">A second child arrives in the next slice.</p>
       {choreAdded ? <p className="text-center text-sm text-blue-100">Chore added.</p> : null}
+      {choreConfirmed ? <p className={cn("text-center text-sm text-blue-100")}>Chore confirmed.</p> : null}
+      {listBody}
       <form method="POST" action="/api/family/chores" className="space-y-4" onSubmit={handleSubmit} noValidate>
         <input type="hidden" name="child_profile_id" value={child.id} />
         <FormField
@@ -180,13 +255,30 @@ function ChildToday({
   );
 }
 
-export default function ParentToday({ serverError, view, child, choreAdded }: Props) {
+export default function ParentToday({
+  serverError,
+  view,
+  child,
+  choreAdded,
+  loadFailed,
+  chores,
+  choreConfirmed,
+}: Props) {
   if (view === "add-child") {
     return <AddChildForm serverError={serverError} />;
   }
 
   if (view === "child" && child) {
-    return <ChildToday child={child} serverError={serverError} choreAdded={choreAdded} />;
+    return (
+      <ChildToday
+        child={child}
+        serverError={serverError}
+        choreAdded={choreAdded}
+        loadFailed={loadFailed}
+        chores={chores}
+        choreConfirmed={choreConfirmed}
+      />
+    );
   }
 
   if (view === "child" || view === "child-unavailable") {

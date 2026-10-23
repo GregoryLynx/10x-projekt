@@ -157,22 +157,22 @@ Migracji nie ma. Istniejące wiersze z pustym `parent_confirmed_at` zostają nie
 
 #### Automated
 
-- [x] 1.1 `npx eslint src/pages/api/family/chore-confirm.ts` przechodzi
-- [x] 1.2 `npx astro check` przechodzi
+- [x] 1.1 `npx eslint src/pages/api/family/chore-confirm.ts` przechodzi — fd5612e
+- [x] 1.2 `npx astro check` przechodzi — fd5612e
 
 #### Manual
 
-- [x] 1.3 Sesja rodzica potwierdza odhaczony obowiązek dziecka z dziś; `parent_confirmed_at` się ustawia, a drugie potwierdzenie zostawia ten sam znacznik
-- [x] 1.4 Obowiązek bez odhaczenia, obowiązek spoza dziś albo spoza rodziny oraz sesja dziecka nie ustawiają `parent_confirmed_at`
+- [x] 1.3 Sesja rodzica potwierdza odhaczony obowiązek dziecka z dziś; `parent_confirmed_at` się ustawia, a drugie potwierdzenie zostawia ten sam znacznik — fd5612e
+- [x] 1.4 Obowiązek bez odhaczenia, obowiązek spoza dziś albo spoza rodziny oraz sesja dziecka nie ustawiają `parent_confirmed_at` — fd5612e
 
 ### Phase 2: Lista rodzica
 
 #### Automated
 
-- [ ] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx` przechodzi
-- [ ] 2.2 `npx astro check` przechodzi
+- [x] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx` przechodzi
+- [x] 2.2 `npx astro check` przechodzi
 
 #### Manual
 
-- [ ] 2.3 Rodzic widzi trzy grupy w kolejności starszy wyżej; Confirm przenosi czekający wiersz do Done i pokazuje „Chore confirmed.”
-- [ ] 2.4 Po potwierdzeniu dziecko nie cofa odhaczenia, a rodzic nadal ma formularz dodawania i napis o drugim dziecku
+- [x] 2.3 Rodzic widzi trzy grupy w kolejności starszy wyżej; Confirm przenosi czekający wiersz do Done i pokazuje „Chore confirmed.”
+- [x] 2.4 Po potwierdzeniu dziecko nie cofa odhaczenia, a rodzic nadal ma formularz dodawania i napis o drugim dziecku
