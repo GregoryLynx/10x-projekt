@@ -146,22 +146,22 @@ Migracji nie ma.
 
 #### Automated
 
-- [x] 1.1 `npx eslint src/pages/api/family/chore-remove.ts` przechodzi
-- [x] 1.2 `npx astro check` przechodzi
+- [x] 1.1 `npx eslint src/pages/api/family/chore-remove.ts` przechodzi — 5e9942a
+- [x] 1.2 `npx astro check` przechodzi — 5e9942a
 
 #### Manual
 
-- [x] 1.3 Sesja rodzica usuwa niepotwierdzony obowiązek z dziś; wiersz znika z `today_chores`
-- [x] 1.4 Potwierdzony obowiązek, obowiązek spoza dziś albo spoza rodziny oraz sesja dziecka nie usuwają wiersza
+- [x] 1.3 Sesja rodzica usuwa niepotwierdzony obowiązek z dziś; wiersz znika z `today_chores` — 5e9942a
+- [x] 1.4 Potwierdzony obowiązek, obowiązek spoza dziś albo spoza rodziny oraz sesja dziecka nie usuwają wiersza — 5e9942a
 
 ### Phase 2: Przycisk Remove
 
 #### Automated
 
-- [x] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx` przechodzi
-- [x] 2.2 `npx astro check` przechodzi
+- [x] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx` przechodzi — 5e9942a
+- [x] 2.2 `npx astro check` przechodzi — 5e9942a
 
 #### Manual
 
-- [x] 2.3 Remove w To do i Waiting usuwa wiersz i pokazuje „Chore removed.”
-- [x] 2.4 Done nie ma Remove; dziecko nie widzi Remove; potwierdzony wiersz nie znika
+- [x] 2.3 Remove w To do i Waiting usuwa wiersz i pokazuje „Chore removed.” — 5e9942a
+- [x] 2.4 Done nie ma Remove; dziecko nie widzi Remove; potwierdzony wiersz nie znika — 5e9942a
