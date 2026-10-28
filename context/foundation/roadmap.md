@@ -3,7 +3,7 @@ project: Obowiązki
 version: 1
 status: draft
 created: 2026-09-29
-updated: 2026-10-23
+updated: 2026-10-28
 prd_version: 2
 main_goal: speed
 top_blocker: time
@@ -47,7 +47,7 @@ Co wieczór i rano rodzic wielokrotnie powtarza dzieciom listę obowiązków; ka
 | S-01 | parent-add-child-and-chore     | rodzic doda dziecko i obowiązek na dziś dla tego dziecka          | F-01          | US-01, FR-001–002,005–006 | done |
 | S-02 | child-view-and-checkoff        | dziecko zobaczy listę na dziś i odhaczy pozycję                   | S-01          | US-01, FR-003–004,008–010 | done |
 | S-03 | parent-confirm-chores          | rodzic zobaczy listę dziecka i potwierdzi odhaczenie              | S-02          | US-01, FR-007,011     | done |
-| S-04 | parent-remove-unconfirmed-chore | rodzic usunie niepotwierdzony obowiązek z listy dziecka na dziś | S-01          | US-02, FR-012         | proposed |
+| S-04 | parent-remove-unconfirmed-chore | rodzic usunie niepotwierdzony obowiązek z listy dziecka na dziś | S-01          | US-02, FR-012         | in-progress |
 | S-05 | second-child-isolation         | rodzic doda drugie dziecko; każde widzi tylko swoje obowiązki     | S-03, S-04    | US-01, US-02, FR-005  | proposed |
 
 ## Baseline
@@ -126,7 +126,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Celowo wcześnie w sekwencji (Twój wybór przy gwiazdzie przewodniej); nie wymaga potwierdzenia, ale wymaga spójności stanów z S-02/S-03.
-- **Status:** proposed
+- **Status:** in-progress
 
 ### S-05: Drugie dziecko w tej samej rodzinie
 

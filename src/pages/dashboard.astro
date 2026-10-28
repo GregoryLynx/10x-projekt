@@ -14,6 +14,7 @@ const choreAdded = Astro.url.searchParams.get("added") === "1";
 const choreChecked = Astro.url.searchParams.get("checked") === "1";
 const choreUndone = Astro.url.searchParams.get("undone") === "1";
 const choreConfirmed = Astro.url.searchParams.get("confirmed") === "1";
+const choreRemoved = Astro.url.searchParams.get("removed") === "1";
 
 let view: ParentTodayView = "unavailable";
 let child: ParentChild | null = null;
@@ -181,6 +182,7 @@ if (supabase) {
           loadFailed={parentChoresLoadFailed}
           chores={parentChores}
           choreConfirmed={choreConfirmed}
+          choreRemoved={choreRemoved}
           client:load
         />
       )}

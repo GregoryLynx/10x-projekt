@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import React, { useState } from "react";
-import { AtSign, Check, ClipboardList, Lock, Plus, User, UserPlus } from "lucide-react";
+import { AtSign, Check, ClipboardList, Lock, Plus, Trash2, User, UserPlus } from "lucide-react";
 import { FormField } from "@/components/auth/FormField";
 import { PasswordToggle } from "@/components/auth/PasswordToggle";
 import { ServerError } from "@/components/auth/ServerError";
@@ -28,6 +28,7 @@ interface Props {
   loadFailed: boolean;
   chores: ChildChore[];
   choreConfirmed: boolean;
+  choreRemoved: boolean;
 }
 
 interface AddChildErrors {
@@ -150,14 +151,27 @@ function ConfirmForm({ chore }: { chore: ChildChore }) {
   );
 }
 
+function RemoveForm({ chore }: { chore: ChildChore }) {
+  return (
+    <form method="POST" action="/api/family/chore-remove">
+      <input type="hidden" name="chore_id" value={chore.id} />
+      <SubmitButton pendingText="Removing..." icon={<Trash2 className={cn("size-4")} />}>
+        Remove
+      </SubmitButton>
+    </form>
+  );
+}
+
 function ChoreGroup({
   heading,
   chores,
   showConfirm,
+  showRemove,
 }: {
   heading: string;
   chores: ChildChore[];
   showConfirm?: boolean;
+  showRemove?: boolean;
 }) {
   return (
     <section className={cn("space-y-3")}>
@@ -167,6 +181,7 @@ function ChoreGroup({
           <li key={chore.id} className={cn("space-y-2")}>
             <p className={cn("text-center text-sm text-white")}>{chore.title}</p>
             {showConfirm ? <ConfirmForm chore={chore} /> : null}
+            {showRemove ? <RemoveForm chore={chore} /> : null}
           </li>
         ))}
       </ul>
@@ -181,6 +196,7 @@ function ChildToday({
   loadFailed,
   chores,
   choreConfirmed,
+  choreRemoved,
 }: {
   child: ParentChild;
   serverError?: string | null;
@@ -188,6 +204,7 @@ function ChildToday({
   loadFailed: boolean;
   chores: ChildChore[];
   choreConfirmed: boolean;
+  choreRemoved: boolean;
 }) {
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState<string | undefined>();
@@ -213,8 +230,10 @@ function ChildToday({
   } else {
     listBody = (
       <div className={cn("space-y-4")}>
-        {todo.length > 0 ? <ChoreGroup heading="To do" chores={todo} /> : null}
-        {waiting.length > 0 ? <ChoreGroup heading="Waiting for confirmation" chores={waiting} showConfirm /> : null}
+        {todo.length > 0 ? <ChoreGroup heading="To do" chores={todo} showRemove /> : null}
+        {waiting.length > 0 ? (
+          <ChoreGroup heading="Waiting for confirmation" chores={waiting} showConfirm showRemove />
+        ) : null}
         {done.length > 0 ? <ChoreGroup heading="Done" chores={done} /> : null}
       </div>
     );
@@ -231,6 +250,7 @@ function ChildToday({
       <p className="text-center text-sm text-blue-100/50">A second child arrives in the next slice.</p>
       {choreAdded ? <p className="text-center text-sm text-blue-100">Chore added.</p> : null}
       {choreConfirmed ? <p className={cn("text-center text-sm text-blue-100")}>Chore confirmed.</p> : null}
+      {choreRemoved ? <p className={cn("text-center text-sm text-blue-100")}>Chore removed.</p> : null}
       {listBody}
       <form method="POST" action="/api/family/chores" className="space-y-4" onSubmit={handleSubmit} noValidate>
         <input type="hidden" name="child_profile_id" value={child.id} />
@@ -263,6 +283,7 @@ export default function ParentToday({
   loadFailed,
   chores,
   choreConfirmed,
+  choreRemoved,
 }: Props) {
   if (view === "add-child") {
     return <AddChildForm serverError={serverError} />;
@@ -277,6 +298,7 @@ export default function ParentToday({
         loadFailed={loadFailed}
         chores={chores}
         choreConfirmed={choreConfirmed}
+        choreRemoved={choreRemoved}
       />
     );
   }
