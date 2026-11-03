@@ -7,6 +7,7 @@ This file provides guidance to AI Agent when working with code in this repositor
 - `npm run dev` — start dev server (Cloudflare workerd runtime)
 - `npm run build` — production build (SSR via `@astrojs/cloudflare`)
 - `npm run preview` — preview production build
+- `npm test` — Vitest suite (`vitest run`) against a running preview and local Supabase. `SUPABASE_SERVICE_ROLE_KEY` must be present in the preview env. `BASE_URL` defaults to `http://localhost:4321`.
 - `npm run lint` — ESLint with type-checked rules
 - `npm run lint:fix` — auto-fix lint issues
 - `npm run format` — Prettier (includes prettier-plugin-astro + prettier-plugin-tailwindcss)

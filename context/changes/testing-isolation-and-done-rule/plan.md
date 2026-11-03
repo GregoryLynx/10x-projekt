@@ -247,19 +247,19 @@ No schema change. The suite assumes the existing Supabase migrations are already
 
 #### Automated
 
-- [x] 2.1 With local Supabase running and `astro preview` on port 4321 built with `SUPABASE_URL`, `SUPABASE_KEY`, and `SUPABASE_SERVICE_ROLE_KEY`, `BASE_URL=http://localhost:4321 npm test` exits 0
-- [x] 2.2 `npm test` exits non-zero when no preview is running
-- [x] 2.3 `npm run lint` exits 0
+- [x] 2.1 With local Supabase running and `astro preview` on port 4321 built with `SUPABASE_URL`, `SUPABASE_KEY`, and `SUPABASE_SERVICE_ROLE_KEY`, `BASE_URL=http://localhost:4321 npm test` exits 0 — c9409d0
+- [x] 2.2 `npm test` exits non-zero when no preview is running — c9409d0
+- [x] 2.3 `npm run lint` exits 0 — c9409d0
 
 #### Manual
 
-- [x] 2.4 The integration test asserts each child's dashboard contains only that child's title, a foreign check leaves `child_checked_at` null, check-off shows "Waiting for confirmation" with `parent_confirmed_at` null, one confirm shows parent "Done" and child "Checked off" without Undo, a second confirm leaves the stored `parent_confirmed_at` unchanged, and a yesterday row is absent from both dashboards and cannot be checked off
+- [x] 2.4 The integration test asserts each child's dashboard contains only that child's title, a foreign check leaves `child_checked_at` null, check-off shows "Waiting for confirmation" with `parent_confirmed_at` null, one confirm shows parent "Done" and child "Checked off" without Undo, a second confirm leaves the stored `parent_confirmed_at` unchanged, and a yesterday row is absent from both dashboards and cannot be checked off — c9409d0
 
 ### Phase 3: Cookbook and contributor docs
 
 #### Manual
 
-- [ ] 3.1 `context/foundation/test-plan.md` §6.1 states that phase 1 added no unit test of `isDone`, because that assertion would copy `src/types.ts`
-- [ ] 3.2 `context/foundation/test-plan.md` §6.2 and §6.4 describe the HTTP scenario for risks #1, #2, and #5, including the parent-session timestamp read and the yesterday `chore_date` taken from the inserted row
-- [ ] 3.3 `AGENTS.md` command list and Testing section name `npm test` against a running preview and local Supabase, and still name `npm run smoke` for auth
-- [ ] 3.4 `CLAUDE.md` command list names `npm test` with that same preview and local Supabase prerequisite, and still names `npm run smoke` for auth
+- [x] 3.1 `context/foundation/test-plan.md` §6.1 states that phase 1 added no unit test of `isDone`, because that assertion would copy `src/types.ts`
+- [x] 3.2 `context/foundation/test-plan.md` §6.2 and §6.4 describe the HTTP scenario for risks #1, #2, and #5, including the parent-session timestamp read and the yesterday `chore_date` taken from the inserted row
+- [x] 3.3 `AGENTS.md` command list and Testing section name `npm test` against a running preview and local Supabase, and still name `npm run smoke` for auth
+- [x] 3.4 `CLAUDE.md` command list names `npm test` with that same preview and local Supabase prerequisite, and still names `npm run smoke` for auth

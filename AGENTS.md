@@ -22,6 +22,7 @@ Astro 7 SSR app (`output: "server"`) with React 19 islands, Tailwind 4, Supabase
 - `npm run dev` — Cloudflare workerd local server.
 - `npm run build` / `npm run preview` — production build and preview.
 - `npm run lint` / `npm run lint:fix` — ESLint (type-checked); `npm run format` — Prettier.
+- `npm test` — Vitest suite (`vitest run`) against a running preview and local Supabase. `BASE_URL` defaults to `http://localhost:4321`. `SUPABASE_SERVICE_ROLE_KEY` must be present in the preview env.
 - `npm run smoke` — auth-flow smoke against a running server (`BASE_URL`, default `http://localhost:4321`).
 - Node **22.14.0** (@.nvmrc). Path alias `@/*` → `./src/*` (@tsconfig.json).
 
@@ -31,4 +32,4 @@ ESLint + typescript-eslint strict/stylistic type-checked (@eslint.config.js); Pr
 
 ## Testing & CI
 
-No unit-test runner in-repo; use `npm run smoke` after auth or dependency changes. CI (@.github/workflows/ci.yml) on push/PR to `master`: `astro sync`, `npm run lint`, `astro check`, `npm run build` (needs `SUPABASE_*` secrets), plus a smoke job against local Supabase + preview. Commit message convention is not established yet (no git history in this working copy).
+`npm test` runs the Vitest suite against a running preview and local Supabase (`SUPABASE_SERVICE_ROLE_KEY` in the preview env; `BASE_URL`, default `http://localhost:4321`). `npm run smoke` covers auth; use it after auth or dependency changes. CI (@.github/workflows/ci.yml) on push/PR to `master`: `astro sync`, `npm run lint`, `astro check`, `npm run build` (needs `SUPABASE_*` secrets), plus a smoke job against local Supabase + preview. Until test-plan phase 3, CI does not run Vitest. Commit message convention is not established yet (no git history in this working copy).
