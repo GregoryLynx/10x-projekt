@@ -96,8 +96,12 @@ function errorMessage(error: unknown): string | null {
   return typeof error.message === "string" ? error.message : null;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 function asRecord(value: unknown, label: string): Record<string, unknown> {
-  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+  if (!isRecord(value)) {
     throw new Error(`${label} was not readable`);
   }
   return value;
