@@ -6,13 +6,16 @@ import { createClient } from "@/lib/supabase";
 
 export const prerender = false;
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const childAccountSchema = z.object({
   display_name: z.string().trim().min(1, "Name is required").max(80, "Name must be at most 80 characters"),
-  login: z
+  email: z
     .string()
     .trim()
     .toLowerCase()
-    .regex(/^[a-z0-9]{3,32}$/, "Login must be 3-32 letters or digits"),
+    .min(1, "Email is required")
+    .regex(EMAIL_PATTERN, "Enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -42,14 +45,14 @@ export const POST: APIRoute = async (context) => {
   const form = await context.request.formData();
   const parsed = childAccountSchema.safeParse({
     display_name: formField(form, "display_name"),
-    login: formField(form, "login"),
+    email: formField(form, "email"),
     password: formField(form, "password"),
   });
   if (!parsed.success) {
     return context.redirect(dashboardError(parsed.error.issues[0].message));
   }
 
-  const { display_name, login, password } = parsed.data;
+  const { display_name, email, password } = parsed.data;
 
   const existingChildren = await supabase
     .from("profiles")
@@ -71,7 +74,7 @@ export const POST: APIRoute = async (context) => {
   }
 
   const created = await admin.auth.admin.createUser({
-    email: `${login}@family.local`,
+    email,
     password,
     email_confirm: true,
     user_metadata: { role: "child" },
@@ -93,13 +96,13 @@ export const POST: APIRoute = async (context) => {
     try {
       const removed = await admin.auth.admin.deleteUser(childId);
       if (removed.error) {
-        return context.redirect(dashboardError("Could not release this login"));
+        return context.redirect(dashboardError("Could not release this email"));
       }
     } catch {
-      return context.redirect(dashboardError("Could not release this login"));
+      return context.redirect(dashboardError("Could not release this email"));
     }
     return context.redirect(dashboardError("Could not save the child profile"));
   }
 
-  return context.redirect(`/dashboard?created=${encodeURIComponent(login)}`);
+  return context.redirect(`/dashboard?created=${encodeURIComponent(email)}`);
 };

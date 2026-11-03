@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import React, { useState } from "react";
-import { AtSign, Check, ClipboardList, Lock, Plus, Trash2, User, UserPlus } from "lucide-react";
+import { Check, ClipboardList, Lock, Mail, Plus, Trash2, User, UserPlus } from "lucide-react";
 import { FormField } from "@/components/auth/FormField";
 import { PasswordToggle } from "@/components/auth/PasswordToggle";
 import { ServerError } from "@/components/auth/ServerError";
@@ -9,7 +9,7 @@ import type { ChildChore } from "@/components/family/ChildToday";
 import { cn } from "@/lib/utils";
 import { isDone } from "@/types";
 
-const LOGIN_PATTERN = /^[a-z0-9]{3,32}$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_PASSWORD_LENGTH = 6;
 
 export interface ParentChild {
@@ -33,7 +33,7 @@ interface Props {
 
 interface AddChildErrors {
   displayName?: string;
-  login?: string;
+  email?: string;
   password?: string;
 }
 
@@ -46,7 +46,7 @@ function choreIsDone(chore: ChildChore): boolean {
 
 function AddChildForm({ serverError }: { serverError?: string | null }) {
   const [displayName, setDisplayName] = useState("");
-  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<AddChildErrors>({});
@@ -56,11 +56,11 @@ function AddChildForm({ serverError }: { serverError?: string | null }) {
     if (!displayName.trim()) {
       next.displayName = "Name is required";
     }
-    const loginValue = login.trim().toLowerCase();
-    if (!loginValue) {
-      next.login = "Login is required";
-    } else if (!LOGIN_PATTERN.test(loginValue)) {
-      next.login = "Login must be 3-32 letters or digits";
+    const emailValue = email.trim().toLowerCase();
+    if (!emailValue) {
+      next.email = "Email is required";
+    } else if (!EMAIL_PATTERN.test(emailValue)) {
+      next.email = "Enter a valid email address";
     }
     if (!password) {
       next.password = "Password is required";
@@ -97,16 +97,17 @@ function AddChildForm({ serverError }: { serverError?: string | null }) {
       />
 
       <FormField
-        id="login"
-        label="Login"
-        value={login}
+        id="email"
+        type="email"
+        label="Email"
+        value={email}
         onChange={(v) => {
-          setLogin(v);
-          clearError("login");
+          setEmail(v);
+          clearError("email");
         }}
-        placeholder="zosia"
-        error={errors.login}
-        icon={<AtSign className="size-4" />}
+        placeholder="zosia@example.com"
+        error={errors.email}
+        icon={<Mail className="size-4" />}
       />
 
       <FormField

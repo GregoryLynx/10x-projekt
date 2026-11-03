@@ -42,7 +42,7 @@ Zatrzymanie bazy: `npx supabase stop`.
 ## Jak przejść pętlę
 
 1. Załóż konto rodzica na `/auth/signup` i zaloguj się. Trafisz na `/dashboard`.
-2. Dodaj dziecko: imię, krótki login (3–32 znaki, litery i cyfry) i hasło o długości co najmniej 6. Login dziecka to `{login}@family.local`.
+2. Dodaj dziecko: imię, pełny email i hasło o długości co najmniej 6. Dziecko loguje się tym samym emailem.
 3. Dodaj drugie dziecko. Trzecie jest odrzucane.
 4. Dopisz obowiązek na dziś przy wybranym dziecku.
 5. Wyloguj się i zaloguj jako to dziecko. Widać tylko jego listę. Odhaczenie można cofnąć, dopóki rodzic nie potwierdzi.

@@ -1,9 +1,9 @@
 /**
  * Domain types for Obowiązki (F-01).
  *
- * Child login convention (enforced in S-01 when parent creates accounts):
- * use a synthetic email such as `{slug}@family.local` plus a password chosen
- * by the parent. Soft family size limit (parent + up to 2 children) is app-level.
+ * A parent creates each child with the child's full email and a password.
+ * The child signs in with that same email. Soft family size limit
+ * (parent + up to 2 children) is app-level.
  */
 
 export type ProfileRole = "parent" | "child";
