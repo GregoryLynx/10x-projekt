@@ -48,7 +48,7 @@ Co wieczór i rano rodzic wielokrotnie powtarza dzieciom listę obowiązków; ka
 | S-02 | child-view-and-checkoff        | dziecko zobaczy listę na dziś i odhaczy pozycję                   | S-01          | US-01, FR-003–004,008–010 | done |
 | S-03 | parent-confirm-chores          | rodzic zobaczy listę dziecka i potwierdzi odhaczenie              | S-02          | US-01, FR-007,011     | done |
 | S-04 | parent-remove-unconfirmed-chore | rodzic usunie niepotwierdzony obowiązek z listy dziecka na dziś | S-01          | US-02, FR-012         | done |
-| S-05 | second-child-isolation         | rodzic doda drugie dziecko; każde widzi tylko swoje obowiązki     | S-03, S-04    | US-01, US-02, FR-005  | proposed |
+| S-05 | second-child-isolation         | rodzic doda drugie dziecko; każde widzi tylko swoje obowiązki     | S-03, S-04    | US-01, US-02, FR-005  | in-progress |
 
 ## Baseline
 
@@ -138,7 +138,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Drugie kryterium sukcesu z PRD; sekwencjonowane po pętli jednego dziecka, żeby nie mnożyć ryzyka na starcie.
-- **Status:** proposed
+- **Status:** in-progress
 
 ## Backlog Handoff
 
