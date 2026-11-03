@@ -54,5 +54,6 @@ Zatrzymanie bazy: `npx supabase stop`.
 - `npm run build` / `npm run preview` — build i podgląd
 - `npm run lint` — ESLint
 - `npm run smoke` — smoke logowania, nie obejmuje listy obowiązków (`BASE_URL`, domyślnie `http://localhost:4321`)
+- `npm test` — Vitest: izolacja rodzeństwa, reguła „zrobione” i granica „dziś”. Wymaga lokalnego Supabase i działającego `npm run dev` na porcie 4321.
 
-GitHub Actions na `master` uruchamia lint, `astro check`, build oraz smoke logowania na lokalnym Supabase.
+GitHub Actions na `master` uruchamia lint, `astro check`, build oraz smoke logowania na lokalnym Supabase. Actions nie uruchamia `npm test`.
