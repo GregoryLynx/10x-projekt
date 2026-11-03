@@ -17,11 +17,10 @@ const choreConfirmed = Astro.url.searchParams.get("confirmed") === "1";
 const choreRemoved = Astro.url.searchParams.get("removed") === "1";
 
 let view: ParentTodayView = "unavailable";
-let child: ParentChild | null = null;
+let familyChildren: ParentChild[] = [];
 let showChild = false;
 let childChores: ChildChore[] = [];
 let childChoresLoadFailed = false;
-let parentChores: ChildChore[] = [];
 let parentChoresLoadFailed = false;
 
 function isTimestampOrNull(value: unknown): value is string | null {
@@ -53,6 +52,32 @@ function parseChildChore(raw: unknown): ChildChore | null {
   };
 }
 
+function parseChildProfile(raw: unknown): { id: string; displayName: string } | null {
+  if (typeof raw !== "object" || raw === null) {
+    return null;
+  }
+  if (!("id" in raw) || !("display_name" in raw)) {
+    return null;
+  }
+  if (typeof raw.id !== "string" || typeof raw.display_name !== "string") {
+    return null;
+  }
+
+  return { id: raw.id, displayName: raw.display_name };
+}
+
+function parseParentChore(raw: unknown): { chore: ChildChore; childProfileId: string } | null {
+  const chore = parseChildChore(raw);
+  if (!chore || typeof raw !== "object" || raw === null || !("child_profile_id" in raw)) {
+    return null;
+  }
+  if (typeof raw.child_profile_id !== "string") {
+    return null;
+  }
+
+  return { chore, childProfileId: raw.child_profile_id };
+}
+
 const supabase = createClient(Astro.request.headers, Astro.cookies);
 if (supabase) {
   const profile = await getCurrentProfile(supabase);
@@ -63,29 +88,27 @@ if (supabase) {
       .eq("family_id", profile.family_id)
       .eq("role", "child")
       .order("created_at", { ascending: true })
-      .limit(1);
+      .limit(2);
 
     if (childrenResult.error || !Array.isArray(childrenResult.data)) {
       view = "child-unavailable";
     } else if (childrenResult.data.length === 0) {
       view = "add-child";
     } else {
-      const raw: unknown = childrenResult.data[0];
-      if (
-        typeof raw !== "object" ||
-        raw === null ||
-        !("id" in raw) ||
-        !("display_name" in raw) ||
-        typeof raw.id !== "string" ||
-        typeof raw.display_name !== "string"
-      ) {
-        view = "child-unavailable";
-      } else {
+      const admin = createAdminClient();
+      const loaded: ParentChild[] = [];
+      let profilesOk = true;
+      for (const item of childrenResult.data.slice(0, 2)) {
+        const raw: unknown = item;
+        const parsedProfile = parseChildProfile(raw);
+        if (!parsedProfile) {
+          profilesOk = false;
+          break;
+        }
         let email: string | null = null;
-        const admin = createAdminClient();
         if (admin) {
           try {
-            const authUser = await admin.auth.admin.getUserById(raw.id);
+            const authUser = await admin.auth.admin.getUserById(parsedProfile.id);
             if (!authUser.error && authUser.data.user.email) {
               email = authUser.data.user.email;
             }
@@ -93,17 +116,24 @@ if (supabase) {
             // Admin lookup threw; keep the child on screen without a login email.
           }
         }
-        view = "child";
-        child = {
-          id: raw.id,
-          displayName: raw.display_name,
+        loaded.push({
+          id: parsedProfile.id,
+          displayName: parsedProfile.displayName,
           email,
-        };
+          chores: [],
+        });
+      }
 
+      if (!profilesOk || loaded.length === 0) {
+        view = "child-unavailable";
+      } else {
+        view = "child";
+        const allowedIds = new Set(loaded.map((entry) => entry.id));
+        const choresByChild = new Map<string, ChildChore[]>(loaded.map((entry) => [entry.id, []]));
         const choresResult = await supabase
           .from("today_chores")
-          .select("id, title, child_checked_at, parent_confirmed_at, created_at")
-          .eq("child_profile_id", raw.id)
+          .select("id, title, child_profile_id, child_checked_at, parent_confirmed_at, created_at")
+          .in("child_profile_id", [...allowedIds])
           .eq("chore_date", warsawToday())
           .order("created_at", { ascending: true })
           .order("id", { ascending: true });
@@ -111,20 +141,25 @@ if (supabase) {
         if (choresResult.error || !Array.isArray(choresResult.data)) {
           parentChoresLoadFailed = true;
         } else {
-          const parsed: ChildChore[] = [];
           for (const item of choresResult.data) {
-            const choreRaw: unknown = item;
-            const row = parseChildChore(choreRaw);
+            const raw: unknown = item;
+            const row = parseParentChore(raw);
             if (!row) {
               parentChoresLoadFailed = true;
               break;
             }
-            parsed.push(row);
-          }
-          if (!parentChoresLoadFailed) {
-            parentChores = parsed;
+            const bucket = choresByChild.get(row.childProfileId);
+            if (!bucket) {
+              continue;
+            }
+            bucket.push(row.chore);
           }
         }
+
+        familyChildren = loaded.map((entry) => ({
+          ...entry,
+          chores: parentChoresLoadFailed ? [] : (choresByChild.get(entry.id) ?? []),
+        }));
       }
     }
   } else if (profile?.role === "child") {
@@ -177,10 +212,9 @@ if (supabase) {
         <ParentToday
           serverError={serverError}
           view={view}
-          child={child}
+          familyChildren={familyChildren}
           choreAdded={choreAdded}
           loadFailed={parentChoresLoadFailed}
-          chores={parentChores}
           choreConfirmed={choreConfirmed}
           choreRemoved={choreRemoved}
           client:load

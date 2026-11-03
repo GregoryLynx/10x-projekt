@@ -154,22 +154,22 @@ Bez nowej migracji SQL. Rodzina z jednym dzieckiem zostaje. Po fazie 2 rodzic wi
 
 #### Automated
 
-- [x] 1.1 `npx eslint src/pages/api/family/children.ts` przechodzi
-- [x] 1.2 `npx astro check` przechodzi
+- [x] 1.1 `npx eslint src/pages/api/family/children.ts` przechodzi — 6c7df36
+- [x] 1.2 `npx astro check` przechodzi — 6c7df36
 
 #### Manual
 
-- [x] 1.3 Sesja rodzica tworzy drugie dziecko i rodzic zostaje zalogowany; w `profiles` są dwa wiersze `child` w tej rodzinie, a nowy `auth.users` ma `role=child`
-- [x] 1.4 Trzecie wywołanie jest odrzucone i nie pojawia się kolejny profil ani druga rodzina
+- [x] 1.3 Sesja rodzica tworzy drugie dziecko i rodzic zostaje zalogowany; w `profiles` są dwa wiersze `child` w tej rodzinie, a nowy `auth.users` ma `role=child` — 6c7df36
+- [x] 1.4 Trzecie wywołanie jest odrzucone i nie pojawia się kolejny profil ani druga rodzina — 6c7df36
 
 ### Phase 2: Dwie listy
 
 #### Automated
 
-- [ ] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx` przechodzi
-- [ ] 2.2 `npx astro check` przechodzi
+- [x] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx` przechodzi
+- [x] 2.2 `npx astro check` przechodzi
 
 #### Manual
 
-- [ ] 2.3 W wąskim oknie przy jednym dziecku widać jego listę i formularz drugiego dziecka; po dodaniu drugiego widać obie listy z emailami, a formularza i zdania „A second child arrives in the next slice.” nie ma
-- [ ] 2.4 Dziecko A nie widzi obowiązku dziecka B; odhaczenie A nie zmienia listy B; rodzic potwierdza i usuwa niepotwierdzony obowiązek na liście każdego dziecka
+- [x] 2.3 W wąskim oknie przy jednym dziecku widać jego listę i formularz drugiego dziecka; po dodaniu drugiego widać obie listy z emailami, a formularza i zdania „A second child arrives in the next slice.” nie ma
+- [x] 2.4 Dziecko A nie widzi obowiązku dziecka B; odhaczenie A nie zmienia listy B; rodzic potwierdza i usuwa niepotwierdzony obowiązek na liście każdego dziecka

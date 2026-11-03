@@ -16,6 +16,7 @@ export interface ParentChild {
   id: string;
   displayName: string;
   email: string | null;
+  chores: ChildChore[];
 }
 
 export type ParentTodayView = "unavailable" | "add-child" | "child" | "child-unavailable";
@@ -23,10 +24,9 @@ export type ParentTodayView = "unavailable" | "add-child" | "child" | "child-una
 interface Props {
   serverError?: string | null;
   view: ParentTodayView;
-  child: ParentChild | null;
+  familyChildren: ParentChild[];
   choreAdded: boolean;
   loadFailed: boolean;
-  chores: ChildChore[];
   choreConfirmed: boolean;
   choreRemoved: boolean;
 }
@@ -189,23 +189,7 @@ function ChoreGroup({
   );
 }
 
-function ChildToday({
-  child,
-  serverError,
-  choreAdded,
-  loadFailed,
-  chores,
-  choreConfirmed,
-  choreRemoved,
-}: {
-  child: ParentChild;
-  serverError?: string | null;
-  choreAdded: boolean;
-  loadFailed: boolean;
-  chores: ChildChore[];
-  choreConfirmed: boolean;
-  choreRemoved: boolean;
-}) {
+function ChildToday({ child, loadFailed }: { child: ParentChild; loadFailed: boolean }) {
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState<string | undefined>();
 
@@ -218,6 +202,7 @@ function ChildToday({
     setTitleError(undefined);
   }
 
+  const chores = child.chores;
   const todo = chores.filter((chore) => chore.childCheckedAt === null);
   const waiting = chores.filter((chore) => chore.childCheckedAt !== null && !choreIsDone(chore));
   const done = chores.filter((chore) => choreIsDone(chore));
@@ -240,22 +225,19 @@ function ChildToday({
   }
 
   return (
-    <div className="space-y-4">
-      <div className="space-y-1 text-center">
-        <p className="text-lg font-semibold text-white">{child.displayName}</p>
+    <div className={cn("space-y-4")}>
+      <div className={cn("space-y-1 text-center")}>
+        <p className={cn("text-lg font-semibold text-white")}>{child.displayName}</p>
         <p className={cn("text-sm", child.email ? "text-blue-100/80" : "text-blue-100/60")}>
           {child.email ?? "The login email could not be loaded."}
         </p>
       </div>
-      <p className="text-center text-sm text-blue-100/50">A second child arrives in the next slice.</p>
-      {choreAdded ? <p className="text-center text-sm text-blue-100">Chore added.</p> : null}
-      {choreConfirmed ? <p className={cn("text-center text-sm text-blue-100")}>Chore confirmed.</p> : null}
-      {choreRemoved ? <p className={cn("text-center text-sm text-blue-100")}>Chore removed.</p> : null}
       {listBody}
-      <form method="POST" action="/api/family/chores" className="space-y-4" onSubmit={handleSubmit} noValidate>
+      <form method="POST" action="/api/family/chores" className={cn("space-y-4")} onSubmit={handleSubmit} noValidate>
         <input type="hidden" name="child_profile_id" value={child.id} />
         <FormField
-          id="title"
+          id={`title-${child.id}`}
+          name="title"
           label="Title"
           value={title}
           onChange={(v) => {
@@ -264,10 +246,9 @@ function ChildToday({
           }}
           placeholder="Brush teeth"
           error={titleError}
-          icon={<ClipboardList className="size-4" />}
+          icon={<ClipboardList className={cn("size-4")} />}
         />
-        <ServerError message={serverError} />
-        <SubmitButton pendingText="Adding chore..." icon={<Plus className="size-4" />}>
+        <SubmitButton pendingText="Adding chore..." icon={<Plus className={cn("size-4")} />}>
           Add chore
         </SubmitButton>
       </form>
@@ -278,10 +259,9 @@ function ChildToday({
 export default function ParentToday({
   serverError,
   view,
-  child,
+  familyChildren,
   choreAdded,
   loadFailed,
-  chores,
   choreConfirmed,
   choreRemoved,
 }: Props) {
@@ -289,32 +269,36 @@ export default function ParentToday({
     return <AddChildForm serverError={serverError} />;
   }
 
-  if (view === "child" && child) {
+  const listed = familyChildren.slice(0, 2);
+  if (view === "child" && listed.length > 0) {
     return (
-      <ChildToday
-        child={child}
-        serverError={serverError}
-        choreAdded={choreAdded}
-        loadFailed={loadFailed}
-        chores={chores}
-        choreConfirmed={choreConfirmed}
-        choreRemoved={choreRemoved}
-      />
+      <div className={cn("space-y-4")}>
+        {choreAdded ? <p className={cn("text-center text-sm text-blue-100")}>Chore added.</p> : null}
+        {choreConfirmed ? <p className={cn("text-center text-sm text-blue-100")}>Chore confirmed.</p> : null}
+        {choreRemoved ? <p className={cn("text-center text-sm text-blue-100")}>Chore removed.</p> : null}
+        <ServerError message={serverError} />
+        <div className={cn("space-y-8")}>
+          {listed.map((child) => (
+            <ChildToday key={child.id} child={child} loadFailed={loadFailed} />
+          ))}
+          {listed.length < 2 ? <AddChildForm /> : null}
+        </div>
+      </div>
     );
   }
 
   if (view === "child" || view === "child-unavailable") {
     return (
-      <div className="space-y-4">
-        <p className="text-center text-sm text-blue-100/80">Could not load your child.</p>
+      <div className={cn("space-y-4")}>
+        <p className={cn("text-center text-sm text-blue-100/80")}>Could not load your child.</p>
         <ServerError message={serverError} />
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <p className="text-center text-sm text-blue-100/80">This screen is for a parent.</p>
+    <div className={cn("space-y-4")}>
+      <p className={cn("text-center text-sm text-blue-100/80")}>This screen is for a parent.</p>
       <ServerError message={serverError} />
     </div>
   );
