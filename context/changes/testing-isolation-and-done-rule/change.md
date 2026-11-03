@@ -1,7 +1,7 @@
 ---
 change_id: testing-isolation-and-done-rule
 title: Rollout phase 1 — isolation, done-rule, and today boundary
-status: implementing
+status: implemented
 created: 2026-11-03
 updated: 2026-11-03
 archived_at: null

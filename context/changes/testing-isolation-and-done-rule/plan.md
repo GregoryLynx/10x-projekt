@@ -259,7 +259,7 @@ No schema change. The suite assumes the existing Supabase migrations are already
 
 #### Manual
 
-- [x] 3.1 `context/foundation/test-plan.md` §6.1 states that phase 1 added no unit test of `isDone`, because that assertion would copy `src/types.ts`
-- [x] 3.2 `context/foundation/test-plan.md` §6.2 and §6.4 describe the HTTP scenario for risks #1, #2, and #5, including the parent-session timestamp read and the yesterday `chore_date` taken from the inserted row
-- [x] 3.3 `AGENTS.md` command list and Testing section name `npm test` against a running preview and local Supabase, and still name `npm run smoke` for auth
-- [x] 3.4 `CLAUDE.md` command list names `npm test` with that same preview and local Supabase prerequisite, and still names `npm run smoke` for auth
+- [x] 3.1 `context/foundation/test-plan.md` §6.1 states that phase 1 added no unit test of `isDone`, because that assertion would copy `src/types.ts` — fce6922
+- [x] 3.2 `context/foundation/test-plan.md` §6.2 and §6.4 describe the HTTP scenario for risks #1, #2, and #5, including the parent-session timestamp read and the yesterday `chore_date` taken from the inserted row — fce6922
+- [x] 3.3 `AGENTS.md` command list and Testing section name `npm test` against a running preview and local Supabase, and still name `npm run smoke` for auth — fce6922
+- [x] 3.4 `CLAUDE.md` command list names `npm test` with that same preview and local Supabase prerequisite, and still names `npm run smoke` for auth — fce6922
