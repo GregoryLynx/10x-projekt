@@ -56,13 +56,13 @@ export const POST: APIRoute = async (context) => {
     .select("id")
     .eq("family_id", profile.family_id)
     .eq("role", "child")
-    .limit(1);
+    .limit(2);
 
   if (existingChildren.error) {
     return context.redirect(dashboardError("Could not check existing children"));
   }
-  if (existingChildren.data.length > 0) {
-    return context.redirect(dashboardError("A second child arrives in the next slice"));
+  if (existingChildren.data.length >= 2) {
+    return context.redirect(dashboardError("This family already has two children."));
   }
 
   const admin = createAdminClient();
