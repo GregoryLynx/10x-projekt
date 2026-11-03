@@ -48,7 +48,7 @@ Co wieczór i rano rodzic wielokrotnie powtarza dzieciom listę obowiązków; ka
 | S-02 | child-view-and-checkoff        | dziecko zobaczy listę na dziś i odhaczy pozycję                   | S-01          | US-01, FR-003–004,008–010 | done |
 | S-03 | parent-confirm-chores          | rodzic zobaczy listę dziecka i potwierdzi odhaczenie              | S-02          | US-01, FR-007,011     | done |
 | S-04 | parent-remove-unconfirmed-chore | rodzic usunie niepotwierdzony obowiązek z listy dziecka na dziś | S-01          | US-02, FR-012         | done |
-| S-05 | second-child-isolation         | rodzic doda drugie dziecko; każde widzi tylko swoje obowiązki     | S-03, S-04    | US-01, US-02, FR-005  | in-progress |
+| S-05 | second-child-isolation         | rodzic doda drugie dziecko; każde widzi tylko swoje obowiązki     | S-03, S-04    | US-01, US-02, FR-005  | done |
 
 ## Baseline
 
@@ -138,7 +138,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Drugie kryterium sukcesu z PRD; sekwencjonowane po pętli jednego dziecka, żeby nie mnożyć ryzyka na starcie.
-- **Status:** in-progress
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -173,3 +173,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **S-02: user can (as child) sign in, see what they still have to do today and what they already checked off, check off a chore, and sign out.** — Archived 2026-10-23 → `context/archive/2026-10-16-child-view-and-checkoff/`. Lesson: —.
 - **S-03: user can (as parent) see the child's today list with check-off state and confirm a checked item so it counts as done.** — Archived 2026-10-23 → `context/archive/2026-10-23-parent-confirm-chores/`. Lesson: —.
 - **S-04: user can (as parent) remove an unconfirmed today-chore from a child's list; it disappears for parent and child and is neither done nor todo.** — Archived 2026-11-03 → `context/archive/2026-10-28-parent-remove-unconfirmed-chore/`. Lesson: —.
+- **S-05: user can (as parent) add a second child; each child sees and checks off only their own chores, not a sibling's list.** — Archived 2026-11-03 → `context/archive/2026-11-03-second-child-isolation/`. Lesson: —.
