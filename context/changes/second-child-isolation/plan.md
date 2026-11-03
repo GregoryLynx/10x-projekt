@@ -166,10 +166,10 @@ Bez nowej migracji SQL. Rodzina z jednym dzieckiem zostaje. Po fazie 2 rodzic wi
 
 #### Automated
 
-- [x] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx` przechodzi
-- [x] 2.2 `npx astro check` przechodzi
+- [x] 2.1 `npx eslint src/pages/dashboard.astro src/components/family/ParentToday.tsx` przechodzi — feb3245
+- [x] 2.2 `npx astro check` przechodzi — feb3245
 
 #### Manual
 
-- [x] 2.3 W wąskim oknie przy jednym dziecku widać jego listę i formularz drugiego dziecka; po dodaniu drugiego widać obie listy z emailami, a formularza i zdania „A second child arrives in the next slice.” nie ma
-- [x] 2.4 Dziecko A nie widzi obowiązku dziecka B; odhaczenie A nie zmienia listy B; rodzic potwierdza i usuwa niepotwierdzony obowiązek na liście każdego dziecka
+- [x] 2.3 W wąskim oknie przy jednym dziecku widać jego listę i formularz drugiego dziecka; po dodaniu drugiego widać obie listy z emailami, a formularza i zdania „A second child arrives in the next slice.” nie ma — feb3245
+- [x] 2.4 Dziecko A nie widzi obowiązku dziecka B; odhaczenie A nie zmienia listy B; rodzic potwierdza i usuwa niepotwierdzony obowiązek na liście każdego dziecka — feb3245
