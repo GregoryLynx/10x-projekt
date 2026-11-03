@@ -240,20 +240,20 @@ No schema change. The suite assumes the existing Supabase migrations are already
 
 #### Automated
 
-- [x] 1.1 `npm test` exits 0 when no preview is running and `BASE_URL` is unset
-- [x] 1.2 `npm run lint` exits 0
+- [x] 1.1 `npm test` exits 0 when no preview is running and `BASE_URL` is unset — 983bcf7
+- [x] 1.2 `npm run lint` exits 0 — 983bcf7
 
 ### Phase 2: HTTP scenario for isolation, done-rule, and today
 
 #### Automated
 
-- [ ] 2.1 With local Supabase running and `astro preview` on port 4321 built with `SUPABASE_URL`, `SUPABASE_KEY`, and `SUPABASE_SERVICE_ROLE_KEY`, `BASE_URL=http://localhost:4321 npm test` exits 0
-- [ ] 2.2 `npm test` exits non-zero when no preview is running
-- [ ] 2.3 `npm run lint` exits 0
+- [x] 2.1 With local Supabase running and `astro preview` on port 4321 built with `SUPABASE_URL`, `SUPABASE_KEY`, and `SUPABASE_SERVICE_ROLE_KEY`, `BASE_URL=http://localhost:4321 npm test` exits 0
+- [x] 2.2 `npm test` exits non-zero when no preview is running
+- [x] 2.3 `npm run lint` exits 0
 
 #### Manual
 
-- [ ] 2.4 The integration test asserts each child's dashboard contains only that child's title, a foreign check leaves `child_checked_at` null, check-off shows "Waiting for confirmation" with `parent_confirmed_at` null, one confirm shows parent "Done" and child "Checked off" without Undo, a second confirm leaves the stored `parent_confirmed_at` unchanged, and a yesterday row is absent from both dashboards and cannot be checked off
+- [x] 2.4 The integration test asserts each child's dashboard contains only that child's title, a foreign check leaves `child_checked_at` null, check-off shows "Waiting for confirmation" with `parent_confirmed_at` null, one confirm shows parent "Done" and child "Checked off" without Undo, a second confirm leaves the stored `parent_confirmed_at` unchanged, and a yesterday row is absent from both dashboards and cannot be checked off
 
 ### Phase 3: Cookbook and contributor docs
 
