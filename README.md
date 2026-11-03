@@ -1,192 +1,58 @@
-# 10x Astro Starter
+# Obowiązki
 
-![](./public/template.png)
+Rodzic i dwoje dzieci prowadzą listę obowiązków na dziś. Dziecko widzi tylko swoje pozycje i je odhacza. Rodzic widzi obie listy i potwierdza odhaczenie — dopiero wtedy obowiązek jest zrobiony. Niepotwierdzoną pomyłkę rodzic może usunąć. Po potwierdzeniu pozycji nie da się usunąć.
 
-A modern, opinionated starter template for building fast, accessible web applications.
+Opis produktu: [context/foundation/prd.md](context/foundation/prd.md).
 
-## Tech Stack
+Aplikacja działa w przeglądarce, także na wąskim ekranie telefonu. Nie ma osobnego adresu produkcyjnego: recenzent uruchamia ją lokalnie.
 
-- [Astro](https://astro.build/) v7 - Modern web framework with server-first rendering
-- [React](https://react.dev/) v19 - UI library for interactive components
-- [TypeScript](https://www.typescriptlang.org/) v6 - Type-safe JavaScript
-- [Tailwind CSS](https://tailwindcss.com/) v4 - Utility-first CSS framework
-- [Supabase](https://supabase.com/) - Authentication and backend-as-a-service
-- [Cloudflare Workers](https://workers.cloudflare.com/) - Edge deployment runtime
+## Stos
 
-## Prerequisites
+Astro 7 (SSR), React 19, TypeScript, Tailwind 4, Supabase, Cloudflare Workers.
 
-- Node.js v22.14.0 (as specified in `.nvmrc`)
-- npm (comes with Node.js)
+## Uruchomienie lokalne
 
-## Getting Started
-
-1. Clone the repository:
+Potrzebne są Node.js 22.14.0 (`.nvmrc`), npm i Docker.
 
 ```bash
-git clone https://github.com/przeprogramowani/10x-astro-starter.git
-cd 10x-astro-starter
-```
-
-2. Install dependencies:
-
-```bash
+git clone https://github.com/GregoryLynx/10x-projekt.git
+cd 10x-projekt
 npm install
+npx supabase start
 ```
 
-3. Set up Supabase and configure environment variables — see [Supabase Configuration](#supabase-configuration) below.
+Z wydruku `npx supabase status` przepisz adres API, klucz anon i klucz service role do `.env` i `.dev.vars` (oba pliki są w `.gitignore`):
 
-4. Create a `.dev.vars` file for local Cloudflare dev secrets:
-
-```bash
-cp .env.example .dev.vars
+```
+SUPABASE_URL=http://127.0.0.1:54321
+SUPABASE_KEY=<anon key>
+SUPABASE_SERVICE_ROLE_KEY=<service role key>
 ```
 
-5. Run the development server:
+Klucz service role jest potrzebny, żeby rodzic mógł założyć konto dziecka. Nie commituj tych plików.
 
 ```bash
 npm run dev
 ```
 
-## Available Scripts
+Aplikacja jest pod http://localhost:4321/. Studio bazy jest pod http://127.0.0.1:54323/.
 
-- `npm run dev` - Start development server (Cloudflare workerd runtime)
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint with type-checked rules
-- `npm run lint:fix` - Auto-fix ESLint issues
-- `npm run format` - Run Prettier
-- `npm run smoke` - Smoke test the auth flow against a running server (`BASE_URL`, defaults to `http://localhost:4321`)
+Zatrzymanie bazy: `npx supabase stop`.
 
-## Project Structure
+## Jak przejść pętlę
 
-```md
-.
-├── src/
-│ ├── layouts/ # Astro layouts
-│ ├── pages/ # Astro pages
-│ │ └── api/ # API endpoints
-│ ├── components/ # UI components (Astro & React)
-│ └── assets/ # Static assets
-├── public/ # Public assets
-├── wrangler.jsonc # Cloudflare Workers config
-```
+1. Załóż konto rodzica na `/auth/signup` i zaloguj się. Trafisz na `/dashboard`.
+2. Dodaj dziecko: imię, krótki login (3–32 znaki, litery i cyfry) i hasło o długości co najmniej 6. Login dziecka to `{login}@family.local`.
+3. Dodaj drugie dziecko. Trzecie jest odrzucane.
+4. Dopisz obowiązek na dziś przy wybranym dziecku.
+5. Wyloguj się i zaloguj jako to dziecko. Widać tylko jego listę. Odhaczenie można cofnąć, dopóki rodzic nie potwierdzi.
+6. Zaloguj się jako rodzic. Potwierdź odhaczenie albo usuń niepotwierdzoną pozycję. Potwierdzonej nie da się usunąć.
 
-## Supabase Configuration
+## Skrypty
 
-This project uses [Supabase](https://supabase.com/) for authentication. Environment variables are declared via Astro's `astro:env` schema and are treated as **server-only secrets** — they are never exposed to the client.
+- `npm run dev` — serwer deweloperski
+- `npm run build` / `npm run preview` — build i podgląd
+- `npm run lint` — ESLint
+- `npm run smoke` — smoke logowania, nie obejmuje listy obowiązków (`BASE_URL`, domyślnie `http://localhost:4321`)
 
-### First-time setup (local, no cloud project needed)
-
-Requires [Docker](https://www.docker.com/) and ~7 GB RAM.
-
-1. Create your `.env` file:
-
-```bash
-cp .env.example .env
-```
-
-2. Initialize the local Supabase project (creates a `supabase/` config folder):
-
-```bash
-npx supabase init
-```
-
-3. Start the local stack (downloads Docker images on first run):
-
-```bash
-npx supabase start
-```
-
-4. Copy the credentials printed by the CLI into your `.env` and `.dev.vars`:
-
-```
-SUPABASE_URL=http://127.0.0.1:54321
-SUPABASE_KEY=<anon key from CLI output>
-```
-
-5. To stop the stack when done:
-
-```bash
-npx supabase stop
-```
-
-The local Studio UI is available at `http://localhost:54323`.
-
-No database tables or migrations are required — this project uses Supabase Auth's built-in `auth.users` table only.
-
-### Using a cloud Supabase project instead
-
-If you prefer to use a hosted Supabase project, add these variables to your `.env` and `.dev.vars` files:
-
-| Variable       | Description                                                |
-| -------------- | ---------------------------------------------------------- |
-| `SUPABASE_URL` | Project URL from Supabase dashboard → Settings → API       |
-| `SUPABASE_KEY` | `anon` public key from Supabase dashboard → Settings → API |
-
-```
-SUPABASE_URL=https://<project-ref>.supabase.co
-SUPABASE_KEY=<anon-key>
-```
-
-### Email confirmation in local development
-
-By default Supabase requires email confirmation before a user can sign in. To skip this during local development:
-
-1. Open the Supabase dashboard for your project
-2. Go to **Authentication → Email → Confirm email**
-3. Toggle it **off**
-
-Users can then sign in immediately after sign-up without clicking a confirmation link.
-
-### Auth routes
-
-| Route                 | Description                                                             |
-| --------------------- | ----------------------------------------------------------------------- |
-| `/auth/signin`        | Email/password sign-in form                                             |
-| `/auth/signup`        | Email/password sign-up form                                             |
-| `/auth/confirm-email` | Post-signup "check your inbox" page                                     |
-| `/dashboard`          | Example protected page (redirects to `/auth/signin` if unauthenticated) |
-
-Route protection is handled in `src/middleware.ts`. Add paths to the `PROTECTED_ROUTES` array there to require authentication.
-
-## Deployment
-
-This project deploys to [Cloudflare Workers](https://workers.cloudflare.com/).
-
-1. Build the project:
-
-```bash
-npm run build
-```
-
-2. Deploy with Wrangler:
-
-```bash
-npx wrangler deploy
-```
-
-Set `SUPABASE_URL` and `SUPABASE_KEY` as secrets in your Cloudflare dashboard or via `npx wrangler secret put`.
-
-## Smoke test
-
-`scripts/smoke.mjs` is a dependency-free Node script that walks the whole auth flow (sign-up, sign-in, protected page, sign-out) over HTTP. Run it against the dev server or the production preview after dependency upgrades:
-
-```bash
-npm run dev            # or: npm run build && npm run preview
-BASE_URL=http://localhost:4321 npm run smoke
-```
-
-It needs a reachable Supabase instance (local or cloud) with email confirmation disabled.
-
-> **Note:** this script exists primarily to guard the development of the starter itself — it is a fast sanity check that dependency upgrades did not break the build, the Cloudflare adapter or the Supabase auth flow. It is **not** a substitute for a real test suite. Once you build your own product on top of this starter, add proper tests (unit, integration, end-to-end) suited to your application.
-
-## CI
-
-GitHub Actions runs two jobs on every push and PR to `master`:
-
-- **ci** — lint, `astro check` and build. Configure `SUPABASE_URL` and `SUPABASE_KEY` as repository secrets for the build step.
-- **smoke** — starts a local Supabase via the Supabase CLI, builds, serves the production preview on the Cloudflare runtime and runs `npm run smoke` against it. No secrets required.
-
-## License
-
-MIT
+GitHub Actions na `master` uruchamia lint, `astro check`, build oraz smoke logowania na lokalnym Supabase.
